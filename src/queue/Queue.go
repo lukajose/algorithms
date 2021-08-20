@@ -1,5 +1,9 @@
 package queue
 
+import (
+	iter "collections/interfaces"
+)
+
 type Queue struct {
 	arr []interface{}
 }
@@ -33,8 +37,8 @@ func (q *Queue) Pop() (interface{}, bool) {
 	return el, true
 }
 
-func (q *Queue) iterator() Iterator {
-	return queueIterator{
+func (q *Queue) Iterator() iter.Iterator {
+	return &QueueIterator{
 		index: 0,
 		arr:   q.arr,
 	}

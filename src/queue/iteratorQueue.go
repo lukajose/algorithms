@@ -1,16 +1,20 @@
 package queue
 
-type queueIterator struct {
+type QueueIterator struct {
 	index int
 	arr   []interface{}
 }
 
-func (iter *queueIterator) hasNext() bool {
+func (qit *QueueIterator) HasNext() bool {
 
-	return true
+	return qit.index < len(qit.arr)
 }
 
-func (iter *queueIterator) next() interface{} {
-
+func (qit *QueueIterator) Next() *interface{} {
+	if qit.HasNext() {
+		index := qit.index
+		qit.index++
+		return &(qit.arr[index])
+	}
 	return nil
 }
