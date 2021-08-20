@@ -37,10 +37,9 @@ func (s *Stack) Pop() (interface{}, bool) {
 }
 
 func (s *Stack) Next() (interface{}, bool) {
-	ok := false
-	var el interface{}
+
 	if len(s.arr) == 0 {
-		return el, ok
+		return nil, false
 	}
 	cIndex := s.curr
 	s.curr = (s.curr + 1) % len(s.arr)
