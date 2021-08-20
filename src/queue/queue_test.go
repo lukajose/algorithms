@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestStack(t *testing.T) {
+func TestQueue(t *testing.T) {
 	queue := NewQueue(3)
 	it := queue.Iterator()
 	queue.Push(1)
