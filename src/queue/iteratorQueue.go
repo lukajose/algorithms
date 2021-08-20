@@ -10,7 +10,7 @@ func (qit *QueueIterator) HasNext() bool {
 	return qit.index < len(qit.arr)
 }
 
-func (qit *QueueIterator) Next() *interface{} {
+func (qit *QueueIterator) Next() interface{} {
 	if qit.HasNext() {
 		index := qit.index
 		qit.index++
