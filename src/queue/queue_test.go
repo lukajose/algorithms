@@ -12,7 +12,7 @@ func TestQueue(t *testing.T) {
 	queue.Push("hey there new string")
 	queue.Push(1.143)
 	for it.HasNext() {
-		fmt.Sprintf("%v", it.Next())
+		fmt.Println(it.Next())
 	}
 
 }
