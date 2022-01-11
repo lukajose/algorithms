@@ -1,0 +1,22 @@
+mode: set
+collections/linkedlist/linkedlist.go:32.41,37.2 1 1
+collections/linkedlist/linkedlist.go:39.47,41.2 1 1
+collections/linkedlist/linkedlist.go:43.30,46.18 2 1
+collections/linkedlist/linkedlist.go:50.2,50.20 1 1
+collections/linkedlist/linkedlist.go:46.18,49.3 2 1
+collections/linkedlist/linkedlist.go:54.50,56.23 2 0
+collections/linkedlist/linkedlist.go:59.2,60.10 2 0
+collections/linkedlist/linkedlist.go:56.23,58.3 1 0
+collections/linkedlist/linkedlist.go:63.50,69.2 5 1
+collections/linkedlist/linkedlist.go:71.57,74.2 0 0
+collections/linkedlist/linkedlist.go:76.59,78.23 2 0
+collections/linkedlist/linkedlist.go:84.2,84.12 1 0
+collections/linkedlist/linkedlist.go:78.23,79.37 1 0
+collections/linkedlist/linkedlist.go:82.3,82.19 1 0
+collections/linkedlist/linkedlist.go:79.37,81.4 1 0
+collections/linkedlist/linkedlist.go:87.32,89.2 1 1
+collections/linkedlist/linkedlist.go:91.51,93.2 1 1
+collections/linkedlist/linkedlist.go:95.45,97.2 1 1
+collections/linkedlist/linkedlist.go:99.49,101.17 2 1
+collections/linkedlist/linkedlist.go:104.2,104.13 1 1
+collections/linkedlist/linkedlist.go:101.17,103.3 1 1

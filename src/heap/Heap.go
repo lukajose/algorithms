@@ -73,7 +73,6 @@ func (h *Heap) heapifyUp() {
 			h.items[pIndex], h.items[cIndex] = h.items[cIndex], h.items[pIndex]
 		}
 		cIndex = int(math.Floor(float64(cIndex) / 2))
-
 	}
 
 }
