@@ -10,14 +10,26 @@ type IntItem struct {
 }
 
 func (i *IntItem) CompareTo(item interface{}) int {
-	if intItem, ok := item.(int); ok {
-		if intItem < i.data {
+	switch v := item.(type) {
+	case int:
+		if v < i.data {
 			return -1
 		}
-		if intItem == i.data {
+		if v == i.data {
 			return 0
 		}
 		return 1
+	case Node:
+		if IntItem, ok := v.data.(*IntItem); ok {
+			if IntItem.data < i.data {
+				return -1
+			}
+			if IntItem.data == i.data {
+				return 0
+			}
+			return 1
+		}
+		break
 	}
 	panic(fmt.Errorf("Invalid type cannot compare int with item interface type"))
 }
@@ -27,10 +39,8 @@ func NewIntItem(data int) *IntItem {
 }
 func TestInsert(t *testing.T) {
 	l := NewList(NewIntItem(0))
-	var el []int
 	for i := 1; i < 5; i++ {
 		l.Insert(NewIntItem(i))
-		el = append(el, i)
 	}
 	if l.Len() != 5 {
 		t.Errorf("Expected at least 5 items but got %d", l.Len())
