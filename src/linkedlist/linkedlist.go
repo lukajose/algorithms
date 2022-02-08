@@ -1,7 +1,7 @@
 package linkedlist
 
 import (
-	iterator "collections/interfaces"
+	"collections/interfaces"
 	"fmt"
 )
 
@@ -14,44 +14,42 @@ type LinkedListIterator struct {
 	node *Node
 }
 
-// A comparable item that has to implement the compare to function
-// for the linkedlist to know where to insert and make comparisons
-type ComparableItem interface {
-	// CompareTo should return
-	// -1 if less than item
-	// 1 if more than item
-	// 0 if equal to item
-	CompareTo(item interface{}) int
-}
-
 type Node struct {
 	next *Node
-	data ComparableItem
+	data interfaces.ComparableItem
 }
 
-func NewNode(data ComparableItem) *Node {
+func (n *Node) String() string {
+	return fmt.Sprintf("%v", n.data)
+}
+
+func NewNode(data interfaces.ComparableItem) *Node {
 	return &Node{
 		next: nil,
 		data: data,
 	}
 }
 
-func NewList(data ComparableItem) *LinkedList {
-	return &LinkedList{size: 1, root: NewNode(data)}
+func NewList() *LinkedList {
+	return &LinkedList{size: 1, root: nil}
 }
 
 func (l *LinkedList) Print() {
 	var curr = l.root
 
 	for curr != nil {
-		fmt.Printf("[%v]->", curr.data)
+		fmt.Printf("[%s]->", curr.data.Print())
 		curr = curr.next
 	}
 	fmt.Printf(" nil")
 
 }
 
-func (l *LinkedList) Append(data ComparableItem) {
+func (l *LinkedList) Append(data interfaces.ComparableItem) {
+	if l.root == nil {
+		l.root = NewNode(data)
+		return
+	}
 	var curr = l.root
 	for curr.next != nil {
 		curr = curr.next
@@ -60,7 +58,11 @@ func (l *LinkedList) Append(data ComparableItem) {
 	l.size++
 }
 
-func (l *LinkedList) Insert(data ComparableItem) {
+func (l *LinkedList) Insert(data interfaces.ComparableItem) {
+	if l.root == nil {
+		l.root = NewNode(data)
+		return
+	}
 	var curr = l.root
 	node := NewNode(data)
 	node.next = curr
@@ -68,12 +70,32 @@ func (l *LinkedList) Insert(data ComparableItem) {
 	l.size++
 }
 
-func (l *LinkedList) InsertSorted(data ComparableItem) {
-	// var curr = l.root
+func (l *LinkedList) InsertSorted(data interfaces.ComparableItem) {
+	if l.root == nil {
+		l.root = NewNode(data)
+		return
+	}
+	var curr = l.root
+	for curr.next != nil {
+		if data.CompareTo(curr) <= 0 && data.CompareTo(curr.next) == 1 {
+			var temp = curr.next
+			node := NewNode(data)
+			curr.next = node
+			node.next = temp
+			l.size++
+			return
+		}
+		curr = curr.next
+	}
+	curr.next = NewNode(data)
+	l.size++
 
 }
 
 func (l *LinkedList) Search(data interface{}) interface{} {
+	if l.root == nil {
+		return nil
+	}
 	var curr = l.root
 	for curr.next != nil {
 		if curr.data.CompareTo(data) == 0 {
@@ -88,11 +110,14 @@ func (l *LinkedList) Len() int {
 	return l.size
 }
 
-func (l *LinkedList) Iterator() iterator.Iterator {
+func (l *LinkedList) Iterator() interfaces.Iterator {
 	return &LinkedListIterator{node: l.root}
 }
 
 func (l *LinkedListIterator) HasNext() bool {
+	if l.node == nil {
+		return false
+	}
 	return l.node.next != nil
 }
 

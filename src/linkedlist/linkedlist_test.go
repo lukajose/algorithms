@@ -2,6 +2,7 @@ package linkedlist
 
 import (
 	"fmt"
+	"math/rand"
 	"testing"
 )
 
@@ -19,7 +20,7 @@ func (i *IntItem) CompareTo(item interface{}) int {
 			return 0
 		}
 		return 1
-	case Node:
+	case *Node:
 		if IntItem, ok := v.data.(*IntItem); ok {
 			if IntItem.data < i.data {
 				return -1
@@ -31,15 +32,20 @@ func (i *IntItem) CompareTo(item interface{}) int {
 		}
 		break
 	}
+	fmt.Println("item is:", item)
 	panic(fmt.Errorf("Invalid type cannot compare int with item interface type"))
+}
+
+func (i *IntItem) Print() string {
+	return fmt.Sprintf("%d", i.data)
 }
 
 func NewIntItem(data int) *IntItem {
 	return &IntItem{data: data}
 }
 func TestInsert(t *testing.T) {
-	l := NewList(NewIntItem(0))
-	for i := 1; i < 5; i++ {
+	l := NewList()
+	for i := 0; i < 5; i++ {
 		l.Insert(NewIntItem(i))
 	}
 	if l.Len() != 5 {
@@ -54,6 +60,13 @@ func TestInsert(t *testing.T) {
 			t.Errorf("Expected item to be equal but got %v expected %d", node.data, i)
 		}
 		i--
-
 	}
+}
+
+func TestInsertSorted(t *testing.T) {
+	l := NewList()
+	for i := 0; i < 5; i++ {
+		l.InsertSorted(NewIntItem(rand.Int() % 100))
+	}
+	l.Print()
 }

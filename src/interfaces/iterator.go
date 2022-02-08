@@ -1,4 +1,4 @@
-package iterator
+package interfaces
 
 type Collection interface {
 	Iterator() Iterator
