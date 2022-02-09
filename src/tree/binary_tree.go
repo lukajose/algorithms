@@ -97,3 +97,64 @@ func (tree *BinaryTree) Search(data interfaces.ComparableItem) bool {
 	}
 	return tree.SubTreeSearch(tree.root, data)
 }
+
+func (tree *BinaryTree) min(node *Node) *Node {
+	if node == nil {
+		return node
+	}
+	// check left until very end
+	var minNode, curr *Node = node, node
+	for curr.left != nil {
+		if curr.data.CompareTo(minNode) == -1 {
+			minNode = curr
+		}
+		curr = curr.left
+	}
+	return minNode
+}
+
+func (tree *BinaryTree) delete(node *Node, data interfaces.ComparableItem) (*Node, bool) {
+	if node == nil {
+		return node, false
+	}
+
+	if node.data.CompareTo(data) == -1 {
+		right, ok := tree.delete(node.right, data)
+		node.right = right
+		return node, ok
+	}
+	if node.data.CompareTo(data) == 1 {
+		left, ok := tree.delete(node.left, data)
+		node.left = left
+		return node, ok
+	}
+
+	// node is equal then check condtions
+	// 1. node to delete has no childs
+	if node.left == nil && node.right == nil {
+		fmt.Println("Enters here")
+		return nil, true
+	}
+	// node to delete has one child
+	if node.left == nil {
+		return node.right, true
+	}
+	if node.right == nil {
+		return node.left, true
+	}
+	// finally we know the node still has child nodes in both ends, hence we find the lowest node in this subtree, this then becomes the root
+	minNode := tree.min(node)
+	minNode.left = node.left
+	minNode.right = node.right
+	return minNode, true
+
+}
+
+func (tree *BinaryTree) Delete(data interfaces.ComparableItem) bool {
+	if tree.root == nil {
+		return false
+	}
+	root, deleteOk := tree.delete(tree.root, data)
+	tree.root = root
+	return deleteOk
+}

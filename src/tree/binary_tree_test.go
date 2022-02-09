@@ -12,14 +12,6 @@ type IntItem struct {
 
 func (i IntItem) CompareTo(item interface{}) int {
 	switch v := item.(type) {
-	case int:
-		if v < i.data {
-			return -1
-		}
-		if v == i.data {
-			return 0
-		}
-		return 1
 	case interfaces.ComparableItem:
 		if IntItem, ok := v.(*IntItem); ok {
 			if IntItem.data < i.data {
@@ -30,10 +22,8 @@ func (i IntItem) CompareTo(item interface{}) int {
 			}
 			return 1
 		}
-		break
 	}
-	fmt.Println("item is:", item)
-	panic(fmt.Errorf("Invalid type cannot compare int with item interface type"))
+	panic(fmt.Errorf("Invalid type cannot compare IntItem with item passed as interface"))
 }
 
 func (i *IntItem) Print() string {
@@ -72,4 +62,18 @@ func TestSearch(t *testing.T) {
 		tree.InOrder()
 		t.Errorf("Failed to find inserted item 20")
 	}
+}
+
+func TestDelete(t *testing.T) {
+	tree := NewBinaryTree()
+	tree.Put(&IntItem{1})
+	tree.Put(&IntItem{20})
+	tree.Put(&IntItem{5})
+	tree.Put(&IntItem{8})
+	tree.InOrder()
+	tree.Delete(&IntItem{8})
+	tree.InOrder()
+	// tree.Put(&IntItem{-5})
+	tree.Delete(&IntItem{1})
+	tree.InOrder()
 }
