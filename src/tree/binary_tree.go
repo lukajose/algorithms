@@ -35,7 +35,6 @@ func (tree *BinaryTree) put(node *Node, data interfaces.ComparableItem) *Node {
 	if node == nil {
 		return newNode(nil, nil, nil, data)
 	}
-	fmt.Println("The data is:", node.data.CompareTo(data))
 	switch node.data.CompareTo(data) {
 	case 0:
 		return node
@@ -83,14 +82,17 @@ func (tree *BinaryTree) SubTreeSearch(node *Node, data interfaces.ComparableItem
 	}
 
 	if node.data.CompareTo(data) == -1 {
-		return tree.SubTreeSearch(node.left, data)
+		return tree.SubTreeSearch(node.right, data)
 	}
 
-	return tree.SubTreeSearch(node.right, data)
+	return tree.SubTreeSearch(node.left, data)
 }
 
 func (tree *BinaryTree) Search(data interfaces.ComparableItem) bool {
-	if tree.root == nil || tree.root.data.CompareTo(data) == 0 {
+	if tree.root == nil {
+		return false
+	}
+	if tree.root.data.CompareTo(data) == 0 {
 		return true
 	}
 	return tree.SubTreeSearch(tree.root, data)

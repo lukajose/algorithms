@@ -50,3 +50,26 @@ func TestInsertion(t *testing.T) {
 	tree.Put(&IntItem{15})
 	tree.InOrder()
 }
+
+func TestSearch(t *testing.T) {
+	tree := NewBinaryTree()
+	found := tree.Search(&IntItem{20})
+	if found {
+		tree.InOrder()
+		t.Errorf("Returns true on empty tree")
+	}
+	tree.Put(&IntItem{59})
+	found = tree.Search(&IntItem{59})
+	if !found {
+		tree.InOrder()
+		t.Errorf("Failed to find inserted item 59")
+	}
+	tree.Put(&IntItem{1})
+	tree.Put(&IntItem{20})
+	tree.Put(&IntItem{5})
+	found = tree.Search(&IntItem{20})
+	if !found {
+		tree.InOrder()
+		t.Errorf("Failed to find inserted item 20")
+	}
+}
